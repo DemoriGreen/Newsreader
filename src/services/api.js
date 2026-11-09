@@ -1,23 +1,25 @@
-// Get api key from environment variables
 const NY_TIMES_API_KEY = import.meta.env.VITE_NY_TIMES_API_KEY;
 const BASE_URL = 'https://api.nytimes.com/svc';
 
+const checkApiKey = () => {
+  if (!NY_TIMES_API_KEY) {
+    throw new Error('Missing NY Times API key. Add VITE_NY_TIMES_API_KEY to your .env file.');
+  }
+};
 
 export const fetchTopStories = async () => {
   try {
-    // ⚠️ SECURITY ISSUE #2: API key is exposed in the URL
+    checkApiKey();
     const response = await fetch(
       `${BASE_URL}/topstories/v2/home.json?api-key=${NY_TIMES_API_KEY}`
     );
-    
+
     if (!response.ok) {
       throw new Error('Failed to fetch top stories');
     }
-    
+
     const data = await response.json();
-    
-    // Format the articles for our app
-    return data.results.slice(0, 12).map(article => ({
+    return data.results.slice(0, 12).map((article) => ({
       title: article.title,
       abstract: article.abstract,
       url: article.url,
@@ -30,22 +32,19 @@ export const fetchTopStories = async () => {
   }
 };
 
-
 export const searchArticles = async (query) => {
   try {
-    // ⚠️ SECURITY ISSUE #3: API key is exposed in the URL
+    checkApiKey();
     const response = await fetch(
-      `${BASE_URL}/search/v2/articlesearch.json?q=${query}&api-key=${NY_TIMES_API_KEY}`
+      `${BASE_URL}/search/v2/articlesearch.json?q=${encodeURIComponent(query)}&api-key=${NY_TIMES_API_KEY}`
     );
-    
+
     if (!response.ok) {
       throw new Error('Failed to search articles');
     }
-    
+
     const data = await response.json();
-    
-    // Format the articles for our app
-    return data.response.docs.slice(0, 12).map(article => ({
+    return data.response.docs.slice(0, 12).map((article) => ({
       title: article.headline.main,
       abstract: article.abstract,
       url: article.web_url,
