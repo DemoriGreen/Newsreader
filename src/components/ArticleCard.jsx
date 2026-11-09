@@ -1,8 +1,8 @@
 import { useArticles } from '../context/ArticlesContext';
 
 function ArticleCard({ article }) {
-  const { saveArticle, removeArticle, isArticleSaved } = useArticles();
-  const saved = isArticleSaved(article.url);
+  const { saveArticle, removeArticle, isSaved } = useArticles();
+  const saved = isSaved(article.url);
 
   const handleBookmarkClick = () => {
     if (saved) {
@@ -24,6 +24,8 @@ function ArticleCard({ article }) {
           onClick={handleBookmarkClick}
           className={`bookmark-btn ${saved ? 'saved' : ''}`}
           aria-label={saved ? 'Remove bookmark' : 'Add bookmark'}
+          disabled={!localStorage.getItem('newsreader-user')}
+          title={!localStorage.getItem('newsreader-user') ? 'Log in to save articles' : ''}
         >
           {saved ? '🔖' : '📑'}
         </button>
@@ -35,6 +37,6 @@ function ArticleCard({ article }) {
       </div>
     </div>
   );
-};
+}
 
 export default ArticleCard;
