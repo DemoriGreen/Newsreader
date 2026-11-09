@@ -1,96 +1,59 @@
-# NewsReader Starter App
+# NewsReader
 
-⚠️ **IMPORTANT: This is intentionally insecure starter code!**
-
-This application has several security issues that you will need to fix as part of your assignment:
-
-## Security Issues to Address
-
-1. **No Authentication**: Anyone can access all features without logging in
-2. **Shared State**: All users share the same saved articles (no user-specific data)
-3. **No Protected Routes**: The "Saved Articles" page should require authentication
-4. **No Role-Based Access**: There's no concept of different user types (regular vs premium)
+A React news app that uses the New York Times API to show top stories and search for articles.
 
 ## Getting Started
 
-### Prerequisites
-- Node.js (v18 or higher)
-- A NY Times API key (get one free at https://developer.nytimes.com/)
+You need Node.js 18 or newer and a free NY Times API key from https://developer.nytimes.com/.
 
-### Getting Your NY Times API Key
+Enable both the Top Stories API and Article Search API when creating your API key.
 
-1. Visit https://developer.nytimes.com/ and create a free account
-2. After logging in, click on your email address in the top right corner
-3. Click "Apps" to go to your apps page
-4. Click "New App" button
-5. Give your app a name (e.g., "NewsReader App")
-6. **Important**: Enable these two APIs:
-   - ✅ **Top Stories API**
-   - ✅ **Article Search API**
-7. Click "Save" to generate your API key
+## Setup
 
-### Installation
+1. Clone this repository.
+2. Install the packages:
 
-1. Clone this repository
-2. Install dependencies:
    ```bash
    npm install
    ```
 
-3. Add your NY Times API key to `src/services/api.js`:
-   ```javascript
-   const NY_TIMES_API_KEY = 'your-actual-api-key-here';
+3. Create a file named `.env` in the project root.
+4. Add your API key:
+
+   ```env
+   VITE_NY_TIMES_API_KEY=your_api_key_here
    ```
 
-4. Run the development server:
+5. Start the app:
+
    ```bash
    npm run dev
    ```
 
-5. Open your browser to `http://localhost:5173`
+The `.env` file is ignored by Git. Do not commit your API key.
 
-## Project Structure
+## Features
 
-```
-news-reader-starter/
-├── src/
-│   ├── components/
-│   │   ├── ArticleCard.jsx
-│   │   ├── Layout.jsx
-│   │   ├── Login.css
-│   │   ├── Login.jsx
-│   │   └── Navigation.jsx
-│   ├── context/
-│   │   └── ArticlesContext.jsx
-│   ├── pages/
-│   │   ├── HomePage.jsx
-│   │   ├── SearchPage.jsx
-│   │   └── SavedArticlesPage.jsx
-│   ├── services/
-│   │   └── api.js
-│   ├── App.jsx
-│   ├── main.jsx
-│   └── index.css
-├── index.html
-├── package.json
-└── vite.config.js
-```
+- Browse New York Times top stories.
+- Search for articles.
+- Log in and log out.
+- Save articles separately for each username.
+- Protect the saved articles page so users must log in.
+- Use regular and admin roles.
+- Restrict the admin dashboard to admin users.
+- View saved articles from all users in the admin dashboard.
 
-## Features (Current)
+## Demo Login
 
-- Browse NY Times top stories
-- Search for articles by keyword
-- Bookmark articles (shared by all users - this needs to be fixed!)
-- Responsive design
+The assignment uses mock login, so any non-empty username and password work. Choose Regular User or Admin to test each role. This is for the class project and is not real account security.
 
-## Your Assignment
+## Deployment
 
-You will need to:
-1. Implement user authentication (login/logout)
-2. Create protected routes that require authentication
-3. Make saved articles user-specific
-4. Add role-based access control (regular vs premium users)
-5. Secure the API key using environment variables
-6. Deploy the application to Vercel
+When deploying to Vercel, add an Environment Variable named `VITE_NY_TIMES_API_KEY` and set its value to your NY Times API key. Redeploy after adding or changing the variable.
 
-Good luck!
+## Scripts
+
+- `npm run dev` starts the development server.
+- `npm run build` creates a production build.
+- `npm run lint` runs ESLint.
+- `npm run preview` previews the production build.
